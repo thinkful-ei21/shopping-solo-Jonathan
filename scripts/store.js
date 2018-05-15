@@ -1,11 +1,11 @@
 /* global cuid */
 // eslint-disable-next-line no-unused-vars
-const STORE = (function() {
+const store = (function() {
     const items = [
-        {name: 'apple', checked: false},
-        {name: 'oranges', checked: false},
-        {name: 'milk', checked: true},
-        {name: 'bread', checked: false}
+        { id: cuid(), name: 'apples', checked: false },
+        { id: cuid(), name: 'oranges', checked: false },
+        { id: cuid(), name: 'milk', checked: true },
+        { id: cuid(), name: 'bread', checked: false }
     ]
     const hideChecked = false;
     const searchItem = '';
@@ -24,16 +24,12 @@ const STORE = (function() {
         console.log('Cannot add item: ' + e.message);
         }
     }
+
     function findAndToggleChecked(id) {
-        const currentItem = this.findById(id);
-        this.item = this.items.map(function(item){
-            if (items.checked == false) {
-                return true;
-            }
-            return false;
-        })
-    }
-    
+        const currentItem = this.items.find(item => item.id === id);
+        currentItem.checked = !currentItem.checked;
+        }
+
     function findAndUpdateName(id, newName) {
         try {
             Item.validateName(newName);
@@ -62,15 +58,11 @@ const STORE = (function() {
     }
 
     function setSearchTerm(val) {
-        console.log('im here');
         this.searchTerm = val;
-        console.log(this.setSearchTerm);
     }
   
     return {
       items,
-      hideCheckedItems,
-      searchTerm,
       findAndDelete,
       findAndToggleChecked,
       findAndUpdateName,
